@@ -1,30 +1,27 @@
 class Gear
 
-  attr_accessor :processor, :workers, :name
+  attr_accessor :processors,
 
-  def initialize(name)
+  def initialize(&blk)
     @config = {}
-    @name = name
+    @processors = []
+    instance_eval(&blk)
   end
 
   def method_missing(method_name, *args)
     @config[method_name] = args.first
   end
 
-  def handler(&blk)
-    Handler.evaluate(&blk)
-  end
-
   def processor(&blk)
-    Processor.evaluate(&blk)
-  end
-
-  def self.gear(&blk)
-    Gear.new.instance_eval(&blk)
+    @processors << Processor.evaluate(&blk)
   end
 
   def self.declare(&blk)
-    Gear.class_eval(&blk)
+    Gear.new(&blk)
+  end
+
+  def test_me
+    
   end
 
 end
