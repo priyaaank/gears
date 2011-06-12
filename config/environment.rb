@@ -5,6 +5,7 @@
 
 # Boot up
 require File.join(File.dirname(__FILE__), 'boot')
+require File.join(File.dirname(__FILE__), 'assembly')
 
 # Auto-require default libraries and those for the current Rails environment.
 Bundler.require :default, DaemonKit.env

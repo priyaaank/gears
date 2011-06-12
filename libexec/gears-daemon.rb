@@ -12,7 +12,5 @@ DaemonKit::Application.running! do |config|
 end
 
 # Sample loop to show process
-loop do
-  DaemonKit.logger.info "I'm running"
-  sleep 60
-end
+DaemonKit.logger.info "I'm running"
+Gear.test_me

@@ -1,14 +1,25 @@
+require 'handler'
+
 class Processor
 
-  attr_accessor :queue_name, :config, :name, :handlers, :workers
+  attr_accessor :queue_name, :config, :name, :handlers, :worker_count
   attr_reader :processor_klass
 
   def initialize(name, &blk)
     @config = {}
     @handlers = []
-    workers = DEFAULT_WORKER_COUNT || 4
+    @name = name
+    worker_count = 4 
     instance_eval(&blk)
     prepare_instance
+  end
+
+  def queue(name)
+    @queue_name = name
+  end
+
+  def workers(count)
+    @worker_count = count
   end
 
   def handler(name, &blk)
@@ -20,7 +31,13 @@ class Processor
   end
 
   def run
-    @processor_klass.new(@config, @handler.new_handler_instance)
+    p = @processor_klass.new(@config, @queue_name)
+    p.process(@queue_name) do |response|
+      @handlers.each do |h|
+        i = h.new_handler_instance
+        i.process(response)
+      end
+    end
   end
 
   private
@@ -31,7 +48,8 @@ class Processor
 
   def prepare_instance
     @processor_klass ||= begin
-      require "#{DAEMON_ROOT}/lib/processors/#{@name.to_s}"
+      puts "processors/#{@name.to_s}"
+      require "processors/#{@name.to_s}"
       Object.const_get(camelize(@name))
     end
   end

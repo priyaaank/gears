@@ -6,12 +6,16 @@ class Handler
   def initialize(name, &blk)
     @config = {}
     @name = name
-    instance_eval(&blk)
+    instance_eval(&blk) unless blk.nil?
     prepare_instance
   end
 
   def method_missing(name, *args)
     @config[name] = args.first
+  end
+
+  def new_handler_instance
+    @handler_klass.new(@config)
   end
 
   private
@@ -22,7 +26,7 @@ class Handler
   
   def prepare_instance
     @handler_klass ||= begin
-      require "#{DAEMON_ROOT}/lib/handlers/#{@name.to_s}"
+      require "handlers/#{@name.to_s}"
       Object.const_get(camelize(@name))
     end
   end

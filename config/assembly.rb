@@ -1,7 +1,9 @@
-Gears.declare do
+require 'gear'
+
+Gear.declare do
 
     processor :sqs do
-      queue_name    :thumbnail_queue
+      queue         :thumbnail_queue
       workers       5
       handler       :thumbnailer
 
