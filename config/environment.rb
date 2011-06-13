@@ -5,6 +5,8 @@
 
 # Boot up
 require File.join(File.dirname(__FILE__), 'boot')
+APP_CONFIG = YAML.load_file("#{DAEMON_ROOT}/config/keys.yml")
+
 require File.join(File.dirname(__FILE__), 'assembly')
 
 # Auto-require default libraries and those for the current Rails environment.
