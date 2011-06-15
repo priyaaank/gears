@@ -13,4 +13,7 @@ end
 
 # Sample loop to show process
 DaemonKit.logger.info "I'm running"
-Gear.test_me
+
+EM.run do
+  Gear.test_me
+end

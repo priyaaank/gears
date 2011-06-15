@@ -3,13 +3,32 @@ GEM
   remote: http://rubygems.org/
   remote: http://rubygems.org/
   specs:
+    addressable (2.2.6)
     daemon-kit (0.1.8.1)
       eventmachine (>= 0.12.10)
-    eventmachine (0.12.10)
+    em-http-request (1.0.0.beta.4)
+      addressable (>= 2.2.3)
+      em-socksify
+      eventmachine (>= 1.0.0.beta.3)
+      http_parser.rb (>= 0.5.1)
+    em-socksify (0.1.0)
+      eventmachine
+    eventmachine (1.0.0.beta.3)
+    http_parser.rb (0.5.1)
+    json (1.5.1)
+    nokogiri (1.4.4)
+    ruby-hmac (0.4.0)
+    sqs_async (0.0.7)
+      em-http-request (~> 1.0.0.beta.4)
+      eventmachine (~> 1.0.0.beta.3)
+      json
+      nokogiri
+      ruby-hmac
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   daemon-kit
-  eventmachine
+  eventmachine (~> 1.0.0.beta.3)
+  sqs_async

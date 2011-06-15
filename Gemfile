@@ -10,6 +10,7 @@ source :rubygems
 
 # daemon-kit
 gem 'daemon-kit'
-gem 'eventmachine'
+gem 'eventmachine', '~> 1.0.0.beta.3'
+gem 'sqs_async'
 
 # For more information on bundler, please visit http://gembundler.com
